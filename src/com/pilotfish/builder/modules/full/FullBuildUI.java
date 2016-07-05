@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-package com.pilotfish.builder.full;
+package com.pilotfish.builder.modules.full;
 
+import com.pilotfish.builder.ModuleUI;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import java.awt.*;
+import java.beans.PropertyChangeEvent;
 
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class FullBuildUI extends JPanel {
+public class FullBuildUI extends ModuleUI<JPanel> {
+
+    private JPanel panel;
 
     private JLabel typeLabel;
     private JLabel nameLabel;
@@ -33,7 +36,13 @@ public class FullBuildUI extends JPanel {
 
     public FullBuildUI(){
         initComponents();
+        initUI();
         buildPanel();
+    }
+
+    private void initUI(){
+        panel = new JPanel();
+        panel.setLayout(new MigLayout());
     }
 
     private void initComponents(){
@@ -44,11 +53,19 @@ public class FullBuildUI extends JPanel {
     }
 
     private void buildPanel(){
-        setLayout(new MigLayout());
-        add(typeLabel);
-        add(typeComboBox, "wrap");
-        add(nameLabel);
-        add(nameField);
+        panel.add(typeLabel);
+        panel.add(typeComboBox, "wrap");
+        panel.add(nameLabel);
+        panel.add(nameField);
     }
 
+    @Override
+    protected void handlePropertyChange(PropertyChangeEvent event) {
+
+    }
+
+    @Override
+    protected JPanel getComponent() {
+        return panel;
+    }
 }

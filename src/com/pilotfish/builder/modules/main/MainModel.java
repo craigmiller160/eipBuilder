@@ -14,18 +14,24 @@
  * limitations under the License.
  */
 
-package com.pilotfish.builder;
+package com.pilotfish.builder.modules.main;
+
+import com.pilotfish.builder.ModuleModel;
+import com.pilotfish.builder.RunConfigType;
 
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class BuilderModel extends AbstractModel{
+public class MainModel extends ModuleModel {
+
+    public static final String RUN_CONFIG_TYPE_PROP = "RunConfigType";
 
     private RunConfigType runConfigType;
 
     public void setRunConfigType(RunConfigType runConfigType){
+        RunConfigType oldValue = this.runConfigType;
         this.runConfigType = runConfigType;
-
+        firePropertyChangeEvent(RUN_CONFIG_TYPE_PROP, oldValue, runConfigType);
     }
 
     public RunConfigType getRunConfigType(){

@@ -16,23 +16,17 @@
 
 package com.pilotfish.builder;
 
-import javax.swing.*;
-import java.util.HashMap;
-import java.util.Map;
+import com.pilotfish.builder.listener.ViewListener;
+
+import java.awt.*;
 
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class ModuleFactory {
+public interface Module<T extends Component> extends ViewListener{
 
+    ModuleModel getModel();
 
-
-    public static ModuleFactory newInstance(){
-        return new ModuleFactory();
-    }
-
-    private ModuleFactory(){
-
-    }
+    ModuleUI<T> getUI();
 
 }

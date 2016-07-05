@@ -22,7 +22,7 @@ import java.beans.PropertyChangeSupport;
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class AbstractModel  {
+public class ModuleModel {
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 

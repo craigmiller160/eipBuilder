@@ -16,63 +16,54 @@
 
 package com.pilotfish.builder;
 
-import com.pilotfish.builder.listener.ViewEvent;
-import com.pilotfish.builder.listener.ViewListener;
-import com.pilotfish.builder.listener.ViewValueChangeEvent;
+import com.pilotfish.builder.modules.main.MainModule;
 
 import javax.swing.*;
-import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class EipBuilder implements ViewListener, BuilderModule{
+public class EipBuilder{
 
     //TODO have required items
 
     public static final String APP_TITLE = "eipBuilder";
-    public static final String RUN_CONFIG_TYPE_PROP = "RunConfigType";
 
-    private BuilderModel builderModel;
-    private BuilderUI builderUI;
+    private static EipBuilder instance;
+
+    private final Map<RunConfigType,Module> modules = new HashMap<>();
 
     public static void main(String[] args){
-        new EipBuilder();
+        instance = new EipBuilder();
+    }
+
+    public static EipBuilder getInstance(){
+        return instance;
     }
 
     public EipBuilder(){
-        initUI();
+        initModules();
+        showFrame();
     }
 
-    private void init(){
-        builderModel = new BuilderModel();
+    private void initModules(){
+        modules.put(RunConfigType.NONE, new MainModule());
+        modules.put(RunConfigType.FULL_APP, null); //TODO fix this
+        modules.put(RunConfigType.CUSTOM_MODULE, null); //TODO fix this
     }
 
-    private void initUI(){
+    public Module getModule(RunConfigType type){
+        return modules.get(type);
+    }
+
+    private void showFrame(){
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                builderUI = new BuilderUI();
-                builderUI.addViewListener(EipBuilder.this);
+                modules.get(RunConfigType.NONE).getUI().getComponent();
             }
         });
-    }
-
-    @Override
-    public Component getUI(){
-        return builderUI;
-    }
-
-    @Override
-    public void viewEvent(ViewEvent viewEvent) {
-        if(viewEvent instanceof ViewValueChangeEvent){
-            ViewValueChangeEvent vvce = (ViewValueChangeEvent) viewEvent;
-            String key = vvce.getKey();
-            switch (key){
-                case RUN_CONFIG_TYPE_PROP:
-                    builderModel.setRunConfigType((RunConfigType) vvce.getValue());
-                    break;
-            }
-        }
     }
 }

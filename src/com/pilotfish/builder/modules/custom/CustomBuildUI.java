@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.pilotfish.builder;
+package com.pilotfish.builder.modules.custom;
 
-import java.awt.*;
+import javax.swing.*;
 
 /**
  * Created by craigmiller on 7/5/16.
  */
-public interface BuilderModule {
+public class CustomBuildUI extends JPanel {
 
-    Component getUI();
+
 
 }

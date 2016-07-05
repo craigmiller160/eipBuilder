@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-package com.pilotfish.builder.custom;
+package com.pilotfish.builder.modules.full;
 
-import javax.swing.*;
+import com.pilotfish.builder.ModuleModel;
 
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class CustomBuildUI extends JPanel {
+public class FullBuildModel extends ModuleModel {
 
+    public FullBuildModel(){
 
+    }
 
 }

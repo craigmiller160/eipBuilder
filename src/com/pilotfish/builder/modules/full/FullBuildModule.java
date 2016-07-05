@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-package com.pilotfish.builder.full;
+package com.pilotfish.builder.modules.full;
 
-import com.pilotfish.builder.BuilderModule;
+import com.pilotfish.builder.Module;
+import com.pilotfish.builder.ModuleModel;
+import com.pilotfish.builder.ModuleUI;
+import com.pilotfish.builder.listener.ViewEvent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,12 +27,12 @@ import java.awt.*;
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class FullBuild implements BuilderModule{
+public class FullBuildModule implements Module<JPanel> {
 
     private FullBuildModel fullBuildModel;
     private FullBuildUI fullBuildUI;
 
-    public FullBuild(){
+    public FullBuildModule(){
         init();
         initUI();
     }
@@ -53,7 +56,17 @@ public class FullBuild implements BuilderModule{
     }
 
     @Override
-    public Component getUI() {
+    public ModuleUI<JPanel> getUI() {
         return fullBuildUI;
+    }
+
+    @Override
+    public ModuleModel getModel() {
+        return fullBuildModel;
+    }
+
+    @Override
+    public void viewEvent(ViewEvent viewEvent) {
+
     }
 }

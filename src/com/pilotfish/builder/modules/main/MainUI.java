@@ -14,8 +14,11 @@
  * limitations under the License.
  */
 
-package com.pilotfish.builder;
+package com.pilotfish.builder.modules.main;
 
+import com.pilotfish.builder.EipBuilder;
+import com.pilotfish.builder.ModuleUI;
+import com.pilotfish.builder.RunConfigType;
 import com.pilotfish.builder.listener.ViewEventSupport;
 import com.pilotfish.builder.listener.ViewListener;
 
@@ -23,13 +26,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
 
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class BuilderUI extends JFrame implements ItemListener{
+public class MainUI extends ModuleUI<JFrame> implements ItemListener{
 
-    private final ViewEventSupport support = new ViewEventSupport();
+    private JFrame frame;
 
     private JLabel buildTypeLabel;
     private JLabel devDirLabel;
@@ -39,17 +43,33 @@ public class BuilderUI extends JFrame implements ItemListener{
     private JButton executeButton;
     private JPanel cardPanel;
 
-    public BuilderUI(){
+    public MainUI(){
         initComponents();
+        initUI();
         buildWindow();
     }
 
-    public void addViewListener(ViewListener listener){
-        support.addListener(listener);
+    @Override
+    protected void handlePropertyChange(PropertyChangeEvent event) {
+
     }
 
-    public void removeViewListener(ViewListener listener){
-        support.removeListener(listener);
+    @Override
+    protected JFrame getComponent() {
+        if(!frame.isVisible()){
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        }
+
+        return frame;
+    }
+
+    private void initUI(){
+        frame = new JFrame();
+        frame.setTitle(EipBuilder.APP_TITLE);
+        frame.setContentPane(createContentPane());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void initComponents(){
@@ -67,17 +87,9 @@ public class BuilderUI extends JFrame implements ItemListener{
     }
 
     private void buildWindow(){
-        setTitle(EipBuilder.APP_TITLE);
-        setContentPane(createContentPane());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        getContentPane().add(createBuildPanel(), BorderLayout.NORTH);
-        getContentPane().add(cardPanel, BorderLayout.CENTER);
-        getContentPane().add(executeButton, BorderLayout.SOUTH);
-
-        pack();
-        setLocationRelativeTo(null);
-        setVisible(true);
+        frame.getContentPane().add(createBuildPanel(), BorderLayout.NORTH);
+        frame.getContentPane().add(cardPanel, BorderLayout.CENTER);
+        frame.getContentPane().add(executeButton, BorderLayout.SOUTH);
     }
 
     private JPanel createContentPane(){

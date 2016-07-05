@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-package com.pilotfish.builder.full;
-
-import com.pilotfish.builder.RunConfigType;
+package com.pilotfish.builder.modules.full;
 
 /**
  * Created by craigmiller on 7/5/16.
