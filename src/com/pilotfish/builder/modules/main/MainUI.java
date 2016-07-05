@@ -20,6 +20,7 @@ import com.pilotfish.builder.BuildConfigType;
 import com.pilotfish.builder.EipBuilder;
 import com.pilotfish.builder.Module;
 import com.pilotfish.builder.ModuleUI;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -109,35 +110,35 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
     }
 
     private void buildWindow(){
-        frame.getContentPane().add(createBuildPanel(), BorderLayout.NORTH);
-        frame.getContentPane().add(cardPanel, BorderLayout.CENTER);
-        frame.getContentPane().add(executeButton, BorderLayout.SOUTH);
+        frame.getContentPane().add(createBuildPanel(), "dock north");
+        frame.getContentPane().add(cardPanel, "dock center");
+        frame.getContentPane().add(executeButton, "dock south");
     }
 
     private JPanel createContentPane(){
-        JPanel contentPane = new JPanel(new BorderLayout());
+        JPanel contentPane = new JPanel(new MigLayout());
         contentPane.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
         return contentPane;
     }
 
     private JPanel createBuildPanel(){
-        JPanel buildPanel = new JPanel(new BorderLayout());
+        JPanel buildPanel = new JPanel(new MigLayout("fillx"));
         buildPanel.setBorder(BorderFactory.createTitledBorder("Choose Build"));
 
-        JPanel runPanel = new JPanel();
-        runPanel.setLayout(new BoxLayout(runPanel, BoxLayout.LINE_AXIS));
-        runPanel.add(buildTypeLabel);
-        runPanel.add(buildTypeComboBox);
+//        JPanel runPanel = new JPanel();
+//        runPanel.setLayout(new BoxLayout(runPanel, BoxLayout.LINE_AXIS));
+        buildPanel.add(buildTypeLabel);
+        buildPanel.add(buildTypeComboBox, "growx, wrap");
 
-        JPanel devPanel = new JPanel();
-        devPanel.setLayout(new BoxLayout(devPanel, BoxLayout.LINE_AXIS));
-        devPanel.add(devDirLabel);
-        devPanel.add(devDirField);
-        devPanel.add(devDirFileChooserBtn);
+//        JPanel devPanel = new JPanel();
+//        devPanel.setLayout(new BoxLayout(devPanel, BoxLayout.LINE_AXIS));
+        buildPanel.add(devDirLabel);
+        buildPanel.add(devDirField, "growx, split 2");
+        buildPanel.add(devDirFileChooserBtn, "");
 
-        buildPanel.add(runPanel, BorderLayout.NORTH);
-        buildPanel.add(devPanel, BorderLayout.SOUTH);
+//        buildPanel.add(runPanel, BorderLayout.NORTH);
+//        buildPanel.add(devPanel, BorderLayout.SOUTH);
 
         return buildPanel;
     }

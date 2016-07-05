@@ -42,7 +42,7 @@ public class FullBuildUI extends ModuleUI<JPanel> {
 
     private void initUI(){
         panel = new JPanel();
-        panel.setLayout(new MigLayout());
+        panel.setLayout(new MigLayout("fillx"));
     }
 
     private void initComponents(){
@@ -53,8 +53,8 @@ public class FullBuildUI extends ModuleUI<JPanel> {
     }
 
     private void buildPanel(){
-        panel.add(typeLabel, "growx");
-        panel.add(typeComboBox, "wrap");
+        panel.add(typeLabel, "");
+        panel.add(typeComboBox, "wrap, growx");
         panel.add(nameLabel);
         panel.add(nameField, "growx");
     }
