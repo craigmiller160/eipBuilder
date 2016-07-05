@@ -42,6 +42,7 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
     private JButton devDirFileChooserBtn;
     private JButton executeButton;
     private JPanel cardPanel;
+    private JPanel blankPanel;
 
     public MainUI(){
         initComponents();
@@ -73,7 +74,7 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
     }
 
     private void initComponents(){
-        buildTypeLabel = new JLabel("Run Build: ");
+        buildTypeLabel = new JLabel("Build: ");
         buildTypeComboBox = new JComboBox<>(RunConfigType.values());
         buildTypeComboBox.addItemListener(this);
         devDirLabel = new JLabel("Dev Directory: ");
@@ -83,10 +84,15 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
         executeButton = new JButton("Execute");
         executeButton.setEnabled(false);
 
-        cardPanel = new JPanel(new CardLayout()); //TODO enlarge
+        cardPanel = new JPanel(new CardLayout());
+        cardPanel.setBorder(BorderFactory.createTitledBorder("Configure Build"));
+
+        blankPanel = new JPanel();
+        blankPanel.setPreferredSize(new Dimension(500, 300));
     }
 
     private void buildWindow(){
+        cardPanel.add(blankPanel, RunConfigType.NONE.toString());
         frame.getContentPane().add(createBuildPanel(), BorderLayout.NORTH);
         frame.getContentPane().add(cardPanel, BorderLayout.CENTER);
         frame.getContentPane().add(executeButton, BorderLayout.SOUTH);
@@ -101,7 +107,7 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
 
     private JPanel createBuildPanel(){
         JPanel buildPanel = new JPanel(new BorderLayout());
-        buildPanel.setBorder(BorderFactory.createTitledBorder("Build Settings"));
+        buildPanel.setBorder(BorderFactory.createTitledBorder("Choose Build"));
 
         JPanel runPanel = new JPanel();
         runPanel.setLayout(new BoxLayout(runPanel, BoxLayout.LINE_AXIS));
