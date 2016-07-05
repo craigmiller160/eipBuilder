@@ -126,19 +126,11 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
         JPanel buildPanel = new JPanel(new MigLayout("fillx"));
         buildPanel.setBorder(BorderFactory.createTitledBorder("Choose Build"));
 
-//        JPanel runPanel = new JPanel();
-//        runPanel.setLayout(new BoxLayout(runPanel, BoxLayout.LINE_AXIS));
         buildPanel.add(buildTypeLabel);
         buildPanel.add(buildTypeComboBox, "growx, wrap");
-
-//        JPanel devPanel = new JPanel();
-//        devPanel.setLayout(new BoxLayout(devPanel, BoxLayout.LINE_AXIS));
         buildPanel.add(devDirLabel);
         buildPanel.add(devDirField, "growx, split 2");
         buildPanel.add(devDirFileChooserBtn, "");
-
-//        buildPanel.add(runPanel, BorderLayout.NORTH);
-//        buildPanel.add(devPanel, BorderLayout.SOUTH);
 
         return buildPanel;
     }
