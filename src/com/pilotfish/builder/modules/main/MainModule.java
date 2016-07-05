@@ -48,6 +48,10 @@ public class MainModule implements Module<JFrame>{
 
     @Override
     public ModuleUI<JFrame> getUI() {
+        if(!SwingUtilities.isEventDispatchThread()){
+            throw new IllegalStateException("getUI() can only be called on the EDT");
+        }
+
         return mainUI;
     }
 

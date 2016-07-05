@@ -57,6 +57,9 @@ public class FullBuildModule implements Module<JPanel> {
 
     @Override
     public ModuleUI<JPanel> getUI() {
+        if(!SwingUtilities.isEventDispatchThread()){
+            throw new IllegalStateException("getUI() can only be called on the EDT");
+        }
         return fullBuildUI;
     }
 
