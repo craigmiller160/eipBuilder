@@ -32,7 +32,7 @@ public abstract class ModuleUI<T extends Component> implements PropertyChangeLis
 
     protected abstract void handlePropertyChange(PropertyChangeEvent event);
 
-    protected abstract T getComponent();
+    public abstract T getComponent();
 
     protected void fireViewEvent(Object source){
         support.fireViewEvent(source);

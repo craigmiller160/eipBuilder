@@ -16,13 +16,34 @@
 
 package com.pilotfish.builder.modules.custom;
 
+import com.pilotfish.builder.ModuleUI;
+
 import javax.swing.*;
+import java.beans.PropertyChangeEvent;
 
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class CustomBuildUI extends JPanel {
+public class CustomBuildUI extends ModuleUI<JPanel> {
+
+    private JPanel panel;
+
+    public CustomBuildUI(){
+        createPanel();
+    }
+
+    private void createPanel(){
+        panel = new JPanel();
+    }
 
 
+    @Override
+    protected void handlePropertyChange(PropertyChangeEvent event) {
 
+    }
+
+    @Override
+    public JPanel getComponent() {
+        return panel;
+    }
 }

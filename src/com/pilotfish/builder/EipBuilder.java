@@ -16,6 +16,8 @@
 
 package com.pilotfish.builder;
 
+import com.pilotfish.builder.modules.custom.CustomModule;
+import com.pilotfish.builder.modules.full.FullBuildModule;
 import com.pilotfish.builder.modules.main.MainModule;
 
 import javax.swing.*;
@@ -49,9 +51,10 @@ public class EipBuilder{
     }
 
     private void initModules(){
+        modules.put(BuildConfigType.FULL_APP, new FullBuildModule());
+        modules.put(BuildConfigType.CUSTOM_MODULE, new CustomModule());
+        //This one always needs to be last
         modules.put(BuildConfigType.NONE, new MainModule());
-        modules.put(BuildConfigType.FULL_APP, null); //TODO fix this
-        modules.put(BuildConfigType.CUSTOM_MODULE, null); //TODO fix this
     }
 
     public Module getModule(BuildConfigType type){

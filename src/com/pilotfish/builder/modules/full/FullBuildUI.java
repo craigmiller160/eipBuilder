@@ -53,10 +53,10 @@ public class FullBuildUI extends ModuleUI<JPanel> {
     }
 
     private void buildPanel(){
-        panel.add(typeLabel);
+        panel.add(typeLabel, "growx");
         panel.add(typeComboBox, "wrap");
         panel.add(nameLabel);
-        panel.add(nameField);
+        panel.add(nameField, "growx");
     }
 
     @Override
@@ -65,7 +65,7 @@ public class FullBuildUI extends ModuleUI<JPanel> {
     }
 
     @Override
-    protected JPanel getComponent() {
+    public JPanel getComponent() {
         return panel;
     }
 }

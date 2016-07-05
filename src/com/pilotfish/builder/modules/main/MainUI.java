@@ -18,6 +18,7 @@ package com.pilotfish.builder.modules.main;
 
 import com.pilotfish.builder.BuildConfigType;
 import com.pilotfish.builder.EipBuilder;
+import com.pilotfish.builder.Module;
 import com.pilotfish.builder.ModuleUI;
 
 import javax.swing.*;
@@ -39,6 +40,7 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
     private JTextField devDirField;
     private JButton devDirFileChooserBtn;
     private JButton executeButton;
+    private CardLayout cardLayout;
     private JPanel cardPanel;
     private JPanel blankPanel;
 
@@ -54,7 +56,7 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
     }
 
     @Override
-    protected JFrame getComponent() {
+    public JFrame getComponent() {
         if(!frame.isVisible()){
             frame.pack();
             frame.setLocationRelativeTo(null);
@@ -82,15 +84,31 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
         executeButton = new JButton("Execute");
         executeButton.setEnabled(false);
 
-        cardPanel = new JPanel(new CardLayout());
-        cardPanel.setBorder(BorderFactory.createTitledBorder("Configure Build"));
-
         blankPanel = new JPanel();
         blankPanel.setPreferredSize(new Dimension(500, 300));
+
+        cardLayout = new CardLayout();
+        cardPanel = createCardPanel();
+    }
+
+    private JPanel createCardPanel(){
+        JPanel cardPanel = new JPanel(cardLayout);
+        cardPanel.setBorder(BorderFactory.createTitledBorder("Configure Build"));
+
+        EipBuilder builder = EipBuilder.getInstance();
+        for(BuildConfigType bct : BuildConfigType.values()){
+            if(bct.equals(BuildConfigType.NONE)){
+                cardPanel.add(blankPanel, BuildConfigType.NONE.toString());
+            }
+            else{
+                cardPanel.add(builder.getModule(bct).getUI().getComponent(), bct.toString());
+            }
+        }
+
+        return cardPanel;
     }
 
     private void buildWindow(){
-        cardPanel.add(blankPanel, BuildConfigType.NONE.toString());
         frame.getContentPane().add(createBuildPanel(), BorderLayout.NORTH);
         frame.getContentPane().add(cardPanel, BorderLayout.CENTER);
         frame.getContentPane().add(executeButton, BorderLayout.SOUTH);
@@ -128,7 +146,8 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
     @Override
     public void itemStateChanged(ItemEvent e) {
         if(e.getSource() == buildTypeComboBox && e.getStateChange() == ItemEvent.SELECTED){
-
+            BuildConfigType buildConfigType = (BuildConfigType) e.getItem();
+            cardLayout.show(cardPanel, buildConfigType.toString());
         }
     }
 }
