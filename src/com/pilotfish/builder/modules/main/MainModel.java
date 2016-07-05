@@ -16,26 +16,26 @@
 
 package com.pilotfish.builder.modules.main;
 
+import com.pilotfish.builder.BuildConfigType;
 import com.pilotfish.builder.ModuleModel;
-import com.pilotfish.builder.RunConfigType;
 
 /**
  * Created by craigmiller on 7/5/16.
  */
 public class MainModel extends ModuleModel {
 
-    public static final String RUN_CONFIG_TYPE_PROP = "RunConfigType";
+    public static final String RUN_CONFIG_TYPE_PROP = "BuildConfigType";
 
-    private RunConfigType runConfigType;
+    private BuildConfigType buildConfigType;
 
-    public void setRunConfigType(RunConfigType runConfigType){
-        RunConfigType oldValue = this.runConfigType;
-        this.runConfigType = runConfigType;
-        firePropertyChangeEvent(RUN_CONFIG_TYPE_PROP, oldValue, runConfigType);
+    public void setBuildConfigType(BuildConfigType buildConfigType){
+        BuildConfigType oldValue = this.buildConfigType;
+        this.buildConfigType = buildConfigType;
+        firePropertyChangeEvent(RUN_CONFIG_TYPE_PROP, oldValue, buildConfigType);
     }
 
-    public RunConfigType getRunConfigType(){
-        return runConfigType;
+    public BuildConfigType getBuildConfigType(){
+        return buildConfigType;
     }
 
 }

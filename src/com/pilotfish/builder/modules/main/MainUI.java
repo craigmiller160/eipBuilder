@@ -16,11 +16,9 @@
 
 package com.pilotfish.builder.modules.main;
 
+import com.pilotfish.builder.BuildConfigType;
 import com.pilotfish.builder.EipBuilder;
 import com.pilotfish.builder.ModuleUI;
-import com.pilotfish.builder.RunConfigType;
-import com.pilotfish.builder.listener.ViewEventSupport;
-import com.pilotfish.builder.listener.ViewListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,7 +35,7 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
 
     private JLabel buildTypeLabel;
     private JLabel devDirLabel;
-    private JComboBox<RunConfigType> buildTypeComboBox;
+    private JComboBox<BuildConfigType> buildTypeComboBox;
     private JTextField devDirField;
     private JButton devDirFileChooserBtn;
     private JButton executeButton;
@@ -75,7 +73,7 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
 
     private void initComponents(){
         buildTypeLabel = new JLabel("Build: ");
-        buildTypeComboBox = new JComboBox<>(RunConfigType.values());
+        buildTypeComboBox = new JComboBox<>(BuildConfigType.values());
         buildTypeComboBox.addItemListener(this);
         devDirLabel = new JLabel("Dev Directory: ");
         devDirField = new JTextField();
@@ -92,7 +90,7 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
     }
 
     private void buildWindow(){
-        cardPanel.add(blankPanel, RunConfigType.NONE.toString());
+        cardPanel.add(blankPanel, BuildConfigType.NONE.toString());
         frame.getContentPane().add(createBuildPanel(), BorderLayout.NORTH);
         frame.getContentPane().add(cardPanel, BorderLayout.CENTER);
         frame.getContentPane().add(executeButton, BorderLayout.SOUTH);

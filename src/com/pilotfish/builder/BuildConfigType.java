@@ -19,7 +19,7 @@ package com.pilotfish.builder;
 /**
  * Created by craigmiller on 7/5/16.
  */
-public enum RunConfigType {
+public enum BuildConfigType {
 
     NONE (""),
     FULL_APP ("Full Application"),
@@ -27,17 +27,17 @@ public enum RunConfigType {
 
     private final String displayTitle;
 
-    RunConfigType(String displayTitle){
+    BuildConfigType(String displayTitle){
         this.displayTitle = displayTitle;
     }
 
-    public static RunConfigType getTypeForTitle(String title){
-        for(RunConfigType bt : values()){
+    public static BuildConfigType getTypeForTitle(String title){
+        for(BuildConfigType bt : values()){
             if(bt.toString().equals(title)){
                 return bt;
             }
         }
-        throw new IllegalArgumentException("No RunConfigType for title: " + title);
+        throw new IllegalArgumentException("No BuildConfigType for title: " + title);
     }
 
     @Override

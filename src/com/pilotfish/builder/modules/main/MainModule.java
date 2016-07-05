@@ -62,7 +62,7 @@ public class MainModule implements Module<JFrame>{
             String key = vvce.getKey();
             switch (key){
                 case RUN_CONFIG_TYPE_PROP:
-                    mainModel.setRunConfigType((RunConfigType) vvce.getValue());
+                    mainModel.setBuildConfigType((BuildConfigType) vvce.getValue());
                     break;
             }
         }

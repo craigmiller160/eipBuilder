@@ -33,7 +33,7 @@ public class EipBuilder{
 
     private static EipBuilder instance;
 
-    private final Map<RunConfigType,Module> modules = new HashMap<>();
+    private final Map<BuildConfigType,Module> modules = new HashMap<>();
 
     public static void main(String[] args){
         instance = new EipBuilder();
@@ -49,12 +49,12 @@ public class EipBuilder{
     }
 
     private void initModules(){
-        modules.put(RunConfigType.NONE, new MainModule());
-        modules.put(RunConfigType.FULL_APP, null); //TODO fix this
-        modules.put(RunConfigType.CUSTOM_MODULE, null); //TODO fix this
+        modules.put(BuildConfigType.NONE, new MainModule());
+        modules.put(BuildConfigType.FULL_APP, null); //TODO fix this
+        modules.put(BuildConfigType.CUSTOM_MODULE, null); //TODO fix this
     }
 
-    public Module getModule(RunConfigType type){
+    public Module getModule(BuildConfigType type){
         return modules.get(type);
     }
 
@@ -62,7 +62,7 @@ public class EipBuilder{
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                modules.get(RunConfigType.NONE).getUI().getComponent();
+                modules.get(BuildConfigType.NONE).getUI().getComponent();
             }
         });
     }
