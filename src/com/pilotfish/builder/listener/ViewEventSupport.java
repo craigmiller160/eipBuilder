@@ -48,6 +48,11 @@ public class ViewEventSupport {
         callListeners(event);
     }
 
+    public void fireViewCommandEvent(Object source, String command){
+        ViewEvent event = new ViewCommandEvent(source, command);
+        callListeners(event);
+    }
+
     private void callListeners(ViewEvent event){
         for(ViewListener listener : listeners){
             listener.viewEvent(event);
