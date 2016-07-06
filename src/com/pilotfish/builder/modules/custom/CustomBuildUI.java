@@ -29,6 +29,12 @@ public class CustomBuildUI extends ModuleUI<JPanel> {
 
     private JPanel panel;
 
+    private JLabel titleLabel;
+    private JLabel versionLabel;
+    private JTextField titleField;
+    private JTextField versionField;
+
+
     public CustomBuildUI(){
         createPanel();
         initComponents();
