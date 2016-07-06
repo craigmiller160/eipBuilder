@@ -19,6 +19,7 @@ package com.pilotfish.builder.modules.main;
 import com.pilotfish.builder.BuildConfigType;
 import com.pilotfish.builder.EipBuilder;
 import com.pilotfish.builder.ModuleUI;
+import com.pilotfish.builder.menu.BuilderMenuBar;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -129,6 +130,9 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener, DocumentLi
         frame.getContentPane().add(createBuildPanel(), "dock north");
         frame.getContentPane().add(cardPanel, "dock center");
         frame.getContentPane().add(executeButton, "dock south");
+
+        BuilderMenuBar menuBar = new BuilderMenuBar(); //TODO add listeners
+        frame.setJMenuBar(menuBar.getComponent());
     }
 
     private JPanel createContentPane(){
