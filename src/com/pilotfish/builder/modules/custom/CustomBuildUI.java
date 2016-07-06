@@ -27,13 +27,15 @@ import java.beans.PropertyChangeEvent;
  */
 public class CustomBuildUI extends ModuleUI<JPanel> {
 
+    private static final String TITLE_TOOLTIP = "The title of the module";
+    private static final String VERSION_TOOLTIP = "The version number of the module";
+
     private JPanel panel;
 
     private JLabel titleLabel;
     private JLabel versionLabel;
     private JTextField titleField;
     private JTextField versionField;
-
 
     public CustomBuildUI(){
         createPanel();
@@ -42,15 +44,28 @@ public class CustomBuildUI extends ModuleUI<JPanel> {
     }
 
     private void createPanel(){
-        panel = new JPanel(new MigLayout());
+        panel = new JPanel(new MigLayout("fillx"));
     }
 
     private void initComponents(){
+        titleLabel = new JLabel("Title: ");
+        titleLabel.setToolTipText(TITLE_TOOLTIP);
 
+        titleField = new JTextField();
+        titleField.setToolTipText(TITLE_TOOLTIP);
+
+        versionLabel = new JLabel("Version: ");
+        versionLabel.setToolTipText(VERSION_TOOLTIP);
+
+        versionField = new JTextField();
+        versionField.setToolTipText(VERSION_TOOLTIP);
     }
 
     private void buildPanel(){
-
+        panel.add(titleLabel);
+        panel.add(titleField, "growx, wrap");
+        panel.add(versionLabel);
+        panel.add(versionField, "growx, wrap");
     }
 
 
