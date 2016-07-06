@@ -17,6 +17,7 @@
 package com.pilotfish.builder.modules.custom;
 
 import com.pilotfish.builder.ModuleUI;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
@@ -30,10 +31,20 @@ public class CustomBuildUI extends ModuleUI<JPanel> {
 
     public CustomBuildUI(){
         createPanel();
+        initComponents();
+        buildPanel();
     }
 
     private void createPanel(){
-        panel = new JPanel();
+        panel = new JPanel(new MigLayout());
+    }
+
+    private void initComponents(){
+
+    }
+
+    private void buildPanel(){
+
     }
 
 

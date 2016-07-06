@@ -27,6 +27,9 @@ import java.beans.PropertyChangeEvent;
  */
 public class FullBuildUI extends ModuleUI<JPanel> {
 
+    private static final String TYPE_TOOLTIP = "Choose the application type to build";
+    private static final String NAME_TOOLTIP = "Add an optional name to this build";
+
     private JPanel panel;
 
     private JLabel typeLabel;
@@ -46,10 +49,17 @@ public class FullBuildUI extends ModuleUI<JPanel> {
     }
 
     private void initComponents(){
-        typeLabel = new JLabel("Build Type: ");
+        typeLabel = new JLabel("Application Type: ");
+        typeLabel.setToolTipText(TYPE_TOOLTIP);
+
         nameLabel = new JLabel("Build Name: ");
+        nameLabel.setToolTipText(NAME_TOOLTIP);
+
         typeComboBox = new JComboBox<>(FullBuildType.values());
+        typeComboBox.setToolTipText(TYPE_TOOLTIP);
+
         nameField = new JTextField();
+        nameField.setToolTipText(NAME_TOOLTIP);
     }
 
     private void buildPanel(){

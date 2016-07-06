@@ -18,11 +18,12 @@ package com.pilotfish.builder.modules.main;
 
 import com.pilotfish.builder.BuildConfigType;
 import com.pilotfish.builder.EipBuilder;
-import com.pilotfish.builder.Module;
 import com.pilotfish.builder.ModuleUI;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -31,7 +32,11 @@ import java.beans.PropertyChangeEvent;
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class MainUI extends ModuleUI<JFrame> implements ItemListener{
+public class MainUI extends ModuleUI<JFrame> implements ItemListener, DocumentListener{
+
+    private static final String BUILD_CONFIG_TOOLTIP = "Select the type of build configuration to run";
+    private static final String DEV_DIR_TOOLTIP = "Open File Chooser to find dev directory";
+    private static final String EXECUTE_TOOLTIP = "Execute the build";
 
     private JFrame frame;
 
@@ -75,15 +80,26 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
     }
 
     private void initComponents(){
-        buildTypeLabel = new JLabel("Build: ");
+        buildTypeLabel = new JLabel("Build Config: ");
+        buildTypeLabel.setToolTipText(BUILD_CONFIG_TOOLTIP);
+
         buildTypeComboBox = new JComboBox<>(BuildConfigType.values());
         buildTypeComboBox.addItemListener(this);
+        buildTypeComboBox.setToolTipText(BUILD_CONFIG_TOOLTIP);
+
         devDirLabel = new JLabel("Dev Directory: ");
+        devDirLabel.setToolTipText(DEV_DIR_TOOLTIP);
+
         devDirField = new JTextField();
+        devDirField.getDocument().addDocumentListener(this);
+
         devDirFileChooserBtn = new JButton("...");
         devDirFileChooserBtn.setPreferredSize(new Dimension(25, 25));
+        devDirFileChooserBtn.setToolTipText(DEV_DIR_TOOLTIP);
+
         executeButton = new JButton("Execute");
         executeButton.setEnabled(false);
+        executeButton.setToolTipText(EXECUTE_TOOLTIP);
 
         blankPanel = new JPanel();
         blankPanel.setPreferredSize(new Dimension(500, 300));
@@ -142,5 +158,24 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener{
             BuildConfigType buildConfigType = (BuildConfigType) e.getItem();
             cardLayout.show(cardPanel, buildConfigType.toString());
         }
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        updateTooltip();
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        updateTooltip();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        updateTooltip();
+    }
+
+    private void updateTooltip(){
+        devDirField.setToolTipText(devDirField.getText());
     }
 }
