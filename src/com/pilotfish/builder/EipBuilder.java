@@ -30,8 +30,10 @@ import java.util.Map;
 public class EipBuilder{
 
     //TODO have required items
+    //TODO add logging
 
     public static final String APP_TITLE = "eipBuilder";
+    private static final String NIMBUS_LF = "Nimbus";
 
     private static EipBuilder instance;
 
@@ -46,8 +48,29 @@ public class EipBuilder{
     }
 
     public EipBuilder(){
+        initLookAndFeel();
         initModules();
         showFrame();
+    }
+
+    private void initLookAndFeel(){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                        if (NIMBUS_LF.equals(info.getName())) {
+                            UIManager.setLookAndFeel(info.getClassName());
+                            break;
+                        }
+                    }
+                }
+                catch(Exception ex){
+                    //TODO improve this
+                    ex.printStackTrace();
+                }
+            }
+        });
     }
 
     private void initModules(){
