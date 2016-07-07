@@ -18,6 +18,8 @@ package com.pilotfish.builder.modules.custom;
 
 import com.pilotfish.builder.ModuleModel;
 
+import java.util.List;
+
 /**
  * Created by craigmiller on 7/6/16.
  */
@@ -25,9 +27,11 @@ public class CustomModel extends ModuleModel {
 
     public static final String JAR_TITLE_PROP = "JarTitle";
     public static final String JAR_VERSION_PROP = "JarVersion";
+    public static final String SRC_FILES_PROP = "SrcFiles";
 
     private String jarTitle;
     private String jarVersion;
+    private List<SrcFile> srcFiles;
 
     public void setJarTitle(String jarTitle) {
         String oldValue = this.jarTitle;
@@ -47,5 +51,13 @@ public class CustomModel extends ModuleModel {
         String oldValue = this.jarVersion;
         this.jarVersion = jarVersion;
         firePropertyChangeEvent(JAR_VERSION_PROP, oldValue, jarVersion);
+    }
+
+    public List<SrcFile> getSrcFiles() {
+        return srcFiles;
+    }
+
+    public void setSrcFiles(List<SrcFile> srcFiles) {
+        this.srcFiles = srcFiles;
     }
 }

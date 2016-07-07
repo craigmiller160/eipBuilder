@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class FileTableModel extends AbstractTableModel {
 
-    private final List<SrcFile> srcFiles = new ArrayList<>();
+    private List<SrcFile> srcFiles = new ArrayList<>();
     private final String[] colNames = {
             "File Name", "Subproject?", "Subproject Name"
     };
@@ -42,6 +42,15 @@ public class FileTableModel extends AbstractTableModel {
     public void removeRow(int rowIndex){
         srcFiles.remove(rowIndex);
         fireTableDataChanged();
+    }
+
+    public void setSrcFiles(List<SrcFile> srcFiles){
+        this.srcFiles = srcFiles != null ? srcFiles : new ArrayList<SrcFile>();
+        fireTableDataChanged();
+    }
+
+    public List<SrcFile> getSrcFiles(){
+        return srcFiles;
     }
 
     @Override

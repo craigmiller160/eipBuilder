@@ -27,6 +27,9 @@ import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.util.List;
+
+import static com.pilotfish.builder.modules.custom.CustomModel.*;
 
 /**
  * Created by craigmiller on 7/5/16.
@@ -74,7 +77,8 @@ public class CustomUI extends ModuleUI<JPanel> implements ActionListener, TableM
         versionField = new JTextField();
         versionField.setToolTipText(VERSION_TOOLTIP);
 
-        srcFileTableModel = new FileTableModel(); //TODO consider using listeners to update the model
+        srcFileTableModel = new FileTableModel();
+        srcFileTableModel.addTableModelListener(this);
         srcFileTable = new JTable(srcFileTableModel);
         srcFileTable.getColumnModel().getColumn(1).setPreferredWidth(100);
         srcFileTable.getColumnModel().getColumn(1).setMaxWidth(100);
@@ -126,6 +130,7 @@ public class CustomUI extends ModuleUI<JPanel> implements ActionListener, TableM
 
     @Override
     public void tableChanged(TableModelEvent e) {
-
+        List<SrcFile> srcFiles = srcFileTableModel.getSrcFiles();
+        fireViewValueChangeEvent(this, SRC_FILES_PROP, srcFiles);
     }
 }

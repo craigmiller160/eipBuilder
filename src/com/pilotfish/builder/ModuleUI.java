@@ -42,6 +42,10 @@ public abstract class ModuleUI<T extends Component> implements PropertyChangeLis
         support.fireViewValueChangeEvent(source, key, value);
     }
 
+    protected void fireViewCommandEvent(Object source, String command){
+        support.fireViewCommandEvent(source, command);
+    }
+
     public void addViewListener(ViewListener listener){
         support.addListener(listener);
     }
