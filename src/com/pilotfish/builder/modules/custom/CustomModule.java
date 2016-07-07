@@ -13,6 +13,7 @@ import javax.swing.*;
 public class CustomModule implements Module<JPanel> {
 
     private CustomUI customUI;
+    private CustomModel customModel;
 
     public CustomModule(){
         init();
@@ -20,18 +21,22 @@ public class CustomModule implements Module<JPanel> {
     }
 
     private void init(){
-
+        customModel = new CustomModel();
     }
 
     private void initUI(){
         if(SwingUtilities.isEventDispatchThread()){
             customUI = new CustomUI();
+            customUI.addViewListener(this);
+            customModel.addPropertyChangeListener(customUI);
         }
         else{
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
                     customUI = new CustomUI();
+                    customUI.addViewListener(CustomModule.this);
+                    customModel.addPropertyChangeListener(customUI);
                 }
             });
         }

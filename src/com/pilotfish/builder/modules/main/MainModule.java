@@ -29,6 +29,7 @@ public class MainModule implements Module<JFrame>{
         if(SwingUtilities.isEventDispatchThread()){
             mainUI = new MainUI();
             mainUI.addViewListener(MainModule.this);
+            mainModel.addPropertyChangeListener(mainUI);
         }
         else{
             SwingUtilities.invokeLater(new Runnable() {
@@ -36,6 +37,7 @@ public class MainModule implements Module<JFrame>{
                 public void run() {
                     mainUI = new MainUI();
                     mainUI.addViewListener(MainModule.this);
+                    mainModel.addPropertyChangeListener(mainUI);
                 }
             });
         }

@@ -21,6 +21,8 @@ import net.miginfocom.layout.CC;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,7 +31,7 @@ import java.beans.PropertyChangeEvent;
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class CustomUI extends ModuleUI<JPanel> implements ActionListener{
+public class CustomUI extends ModuleUI<JPanel> implements ActionListener, TableModelListener{
 
     private static final String TITLE_TOOLTIP = "The title of the module";
     private static final String VERSION_TOOLTIP = "The version number of the module";
@@ -120,5 +122,10 @@ public class CustomUI extends ModuleUI<JPanel> implements ActionListener{
                 srcFileTableModel.removeRow(row);
             }
         }
+    }
+
+    @Override
+    public void tableChanged(TableModelEvent e) {
+
     }
 }

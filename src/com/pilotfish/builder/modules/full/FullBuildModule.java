@@ -44,12 +44,16 @@ public class FullBuildModule implements Module<JPanel> {
     private void initUI(){
         if(SwingUtilities.isEventDispatchThread()){
             fullBuildUI = new FullBuildUI();
+            fullBuildUI.addViewListener(this);
+            fullBuildModel.addPropertyChangeListener(fullBuildUI);
         }
         else{
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
                     fullBuildUI = new FullBuildUI();
+                    fullBuildUI.addViewListener(FullBuildModule.this);
+                    fullBuildModel.addPropertyChangeListener(fullBuildUI);
                 }
             });
         }
