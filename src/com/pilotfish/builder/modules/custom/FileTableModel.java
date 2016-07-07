@@ -31,7 +31,6 @@ public class FileTableModel extends AbstractTableModel {
     };
 
     public FileTableModel(){
-        srcFiles.add(new SrcFile());
     }
 
     public void addRow(){
@@ -40,8 +39,10 @@ public class FileTableModel extends AbstractTableModel {
     }
 
     public void removeRow(int rowIndex){
-        srcFiles.remove(rowIndex);
-        fireTableDataChanged();
+        if(rowIndex < srcFiles.size()){
+            srcFiles.remove(rowIndex);
+            fireTableDataChanged();
+        }
     }
 
     public void setSrcFiles(List<SrcFile> srcFiles){
@@ -83,13 +84,10 @@ public class FileTableModel extends AbstractTableModel {
         }
 
         if(columnIndex == 2){
-            SrcFile srcFile = srcFiles.get(rowIndex);
-            if(srcFile.isSubproject()){
+            if(rowIndex < srcFiles.size() && srcFiles.get(rowIndex).isSubproject()) {
                 return true;
             }
-            else{
-                return false;
-            }
+            return false;
         }
         return true;
     }
@@ -101,7 +99,7 @@ public class FileTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return srcFiles.size();
+        return srcFiles.size() + 1;
     }
 
     @Override
@@ -126,6 +124,7 @@ public class FileTableModel extends AbstractTableModel {
         SrcFile srcFile = null;
         if(rowIndex == srcFiles.size()){
             srcFile = new SrcFile();
+            srcFiles.add(srcFile);
         }
         else{
             srcFile = srcFiles.get(rowIndex);

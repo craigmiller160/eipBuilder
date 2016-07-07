@@ -51,7 +51,6 @@ public class CustomUI extends ModuleUI<JPanel> implements ActionListener, TableM
     private JTable srcFileTable;
     private JScrollPane tableScrollPane;
 
-    private JButton addButton;
     private JButton removeButton;
 
     public CustomUI(){
@@ -85,10 +84,6 @@ public class CustomUI extends ModuleUI<JPanel> implements ActionListener, TableM
 
         tableScrollPane = new JScrollPane(srcFileTable);
 
-        addButton = new JButton("Add");
-        addButton.setToolTipText(ADD_TOOLTIP);
-        addButton.addActionListener(this);
-
         removeButton = new JButton("Remove");
         removeButton.setToolTipText(REMOVE_TOOLTIP);
         removeButton.addActionListener(this);
@@ -100,7 +95,6 @@ public class CustomUI extends ModuleUI<JPanel> implements ActionListener, TableM
         panel.add(versionLabel);
         panel.add(versionField, "growx, wrap");
         panel.add(tableScrollPane, "growx, span 2, wrap");
-        panel.add(addButton, "");
         panel.add(removeButton, "wrap");
     }
 
@@ -117,10 +111,7 @@ public class CustomUI extends ModuleUI<JPanel> implements ActionListener, TableM
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == addButton){
-            srcFileTableModel.addRow();
-        }
-        else if(e.getSource() == removeButton){
+        if(e.getSource() == removeButton){
             int row = srcFileTable.getSelectedRow();
             if(row >= 0){
                 srcFileTableModel.removeRow(row);
