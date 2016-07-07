@@ -30,12 +30,36 @@ public class FileTableModel extends AbstractTableModel {
             "File Name", "Subproject?", "Subproject Name"
     };
 
+    public FileTableModel(){
+        srcFiles.add(new SrcFile());
+    }
+
+    public void addRow(){
+        srcFiles.add(new SrcFile());
+        fireTableDataChanged();
+    }
+
+    public void removeRow(int rowIndex){
+        srcFiles.remove(rowIndex);
+        fireTableDataChanged();
+    }
+
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         if(columnIndex == 1){
             return Boolean.class;
         }
         return String.class;
+    }
+
+    @Override
+    public int findColumn(String columnName) {
+        for(int i = 0; i < colNames.length; i++){
+            if(colNames[i].equals(columnName)){
+                return i;
+            }
+        }
+        return -1;
     }
 
     @Override

@@ -17,18 +17,24 @@
 package com.pilotfish.builder.modules.custom;
 
 import com.pilotfish.builder.ModuleUI;
+import net.miginfocom.layout.CC;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class CustomBuildUI extends ModuleUI<JPanel> {
+public class CustomUI extends ModuleUI<JPanel> implements ActionListener{
 
     private static final String TITLE_TOOLTIP = "The title of the module";
     private static final String VERSION_TOOLTIP = "The version number of the module";
+    private static final String ADD_TOOLTIP = "Add a new file";
+    private static final String REMOVE_TOOLTIP = "Remove the selected file";
 
     private JPanel panel;
 
@@ -36,8 +42,14 @@ public class CustomBuildUI extends ModuleUI<JPanel> {
     private JLabel versionLabel;
     private JTextField titleField;
     private JTextField versionField;
+    private FileTableModel srcFileTableModel;
+    private JTable srcFileTable;
+    private JScrollPane tableScrollPane;
 
-    public CustomBuildUI(){
+    private JButton addButton;
+    private JButton removeButton;
+
+    public CustomUI(){
         createPanel();
         initComponents();
         buildPanel();
@@ -59,6 +71,21 @@ public class CustomBuildUI extends ModuleUI<JPanel> {
 
         versionField = new JTextField();
         versionField.setToolTipText(VERSION_TOOLTIP);
+
+        srcFileTableModel = new FileTableModel(); //TODO consider using listeners to update the model
+        srcFileTable = new JTable(srcFileTableModel);
+        srcFileTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+        srcFileTable.getColumnModel().getColumn(1).setMaxWidth(100);
+
+        tableScrollPane = new JScrollPane(srcFileTable);
+
+        addButton = new JButton("Add");
+        addButton.setToolTipText(ADD_TOOLTIP);
+        addButton.addActionListener(this);
+
+        removeButton = new JButton("Remove");
+        removeButton.setToolTipText(REMOVE_TOOLTIP);
+        removeButton.addActionListener(this);
     }
 
     private void buildPanel(){
@@ -66,6 +93,9 @@ public class CustomBuildUI extends ModuleUI<JPanel> {
         panel.add(titleField, "growx, wrap");
         panel.add(versionLabel);
         panel.add(versionField, "growx, wrap");
+        panel.add(tableScrollPane, "growx, span 2, wrap");
+        panel.add(addButton, "");
+        panel.add(removeButton, "wrap");
     }
 
 
@@ -77,5 +107,18 @@ public class CustomBuildUI extends ModuleUI<JPanel> {
     @Override
     public JPanel getComponent() {
         return panel;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == addButton){
+            srcFileTableModel.addRow();
+        }
+        else if(e.getSource() == removeButton){
+            int row = srcFileTable.getSelectedRow();
+            if(row >= 0){
+                srcFileTableModel.removeRow(row);
+            }
+        }
     }
 }

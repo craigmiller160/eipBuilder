@@ -4,8 +4,6 @@ import com.pilotfish.builder.Module;
 import com.pilotfish.builder.ModuleModel;
 import com.pilotfish.builder.ModuleUI;
 import com.pilotfish.builder.listener.ViewEvent;
-import com.pilotfish.builder.modules.full.FullBuildUI;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 
 import javax.swing.*;
 
@@ -14,7 +12,7 @@ import javax.swing.*;
  */
 public class CustomModule implements Module<JPanel> {
 
-    private CustomBuildUI customBuildUI;
+    private CustomUI customUI;
 
     public CustomModule(){
         init();
@@ -27,13 +25,13 @@ public class CustomModule implements Module<JPanel> {
 
     private void initUI(){
         if(SwingUtilities.isEventDispatchThread()){
-            customBuildUI = new CustomBuildUI();
+            customUI = new CustomUI();
         }
         else{
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    customBuildUI = new CustomBuildUI();
+                    customUI = new CustomUI();
                 }
             });
         }
@@ -46,7 +44,7 @@ public class CustomModule implements Module<JPanel> {
 
     @Override
     public ModuleUI<JPanel> getUI() {
-        return customBuildUI;
+        return customUI;
     }
 
     @Override
