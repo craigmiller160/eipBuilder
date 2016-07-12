@@ -20,12 +20,18 @@ import com.pilotfish.builder.ModuleUI;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
+
+import static com.pilotfish.builder.modules.full.FullBuildModel.*;
 
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class FullBuildUI extends ModuleUI<JPanel> {
+public class FullBuildUI extends ModuleUI<JPanel> implements DocumentListener, ItemListener {
 
     private static final String TYPE_TOOLTIP = "Choose the application type to build";
     private static final String NAME_TOOLTIP = "Add an optional name to this build";
@@ -57,9 +63,11 @@ public class FullBuildUI extends ModuleUI<JPanel> {
 
         typeComboBox = new JComboBox<>(FullBuildType.values());
         typeComboBox.setToolTipText(TYPE_TOOLTIP);
+        typeComboBox.addItemListener(this);
 
         nameField = new JTextField();
         nameField.setToolTipText(NAME_TOOLTIP);
+        nameField.getDocument().addDocumentListener(this);
     }
 
     private void buildPanel(){
@@ -71,11 +79,48 @@ public class FullBuildUI extends ModuleUI<JPanel> {
 
     @Override
     protected void handlePropertyChange(PropertyChangeEvent event) {
+        if(event.getPropertyName().equals(BUILD_NAME_PROP)){
+            String value = (String) event.getNewValue();
+            if(!nameField.getText().equals(value)){
+                nameField.setText(value);
+            }
+        }
+        else if(event.getPropertyName().equals(FULL_BUILD_TYPE_PROP)){
+            FullBuildType value = (FullBuildType) event.getNewValue();
+            if(!typeComboBox.getSelectedItem().equals(value)){
+                typeComboBox.setSelectedItem(value);
+            }
+        }
+    }
 
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        if(e.getStateChange() == ItemEvent.SELECTED){
+            fireViewValueChangeEvent(this, FULL_BUILD_TYPE_PROP, typeComboBox.getSelectedItem());
+        }
     }
 
     @Override
     public JPanel getComponent() {
         return panel;
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        updateName();
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        updateName();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        updateName();
+    }
+
+    private void updateName(){
+        fireViewValueChangeEvent(this, BUILD_NAME_PROP, nameField.getText());
     }
 }

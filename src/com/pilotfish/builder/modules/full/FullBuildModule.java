@@ -20,9 +20,12 @@ import com.pilotfish.builder.Module;
 import com.pilotfish.builder.ModuleModel;
 import com.pilotfish.builder.ModuleUI;
 import com.pilotfish.builder.listener.ViewEvent;
+import com.pilotfish.builder.listener.ViewValueChangeEvent;
 
 import javax.swing.*;
 import java.awt.*;
+
+import static com.pilotfish.builder.modules.full.FullBuildModel.*;
 
 /**
  * Created by craigmiller on 7/5/16.
@@ -74,6 +77,17 @@ public class FullBuildModule implements Module<JPanel> {
 
     @Override
     public void viewEvent(ViewEvent viewEvent) {
+        if(viewEvent instanceof ViewValueChangeEvent){
+            handleValueChangeEvent((ViewValueChangeEvent) viewEvent);
+        }
+    }
 
+    private void handleValueChangeEvent(ViewValueChangeEvent event){
+        if(event.getKey().equals(BUILD_NAME_PROP)){
+            fullBuildModel.setBuildName((String) event.getValue());
+        }
+        else if(event.getKey().equals(FULL_BUILD_TYPE_PROP)){
+            fullBuildModel.setFullBuildType((FullBuildType) event.getValue());
+        }
     }
 }
