@@ -21,11 +21,15 @@ import net.miginfocom.layout.CC;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+import javax.swing.text.Document;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 
@@ -34,12 +38,13 @@ import static com.pilotfish.builder.modules.custom.CustomModel.*;
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class CustomUI extends ModuleUI<JPanel> implements ActionListener, TableModelListener{
+public class CustomUI extends ModuleUI<JPanel> implements ActionListener, TableModelListener, DocumentListener{
 
     private static final String TITLE_TOOLTIP = "The title of the module";
     private static final String VERSION_TOOLTIP = "The version number of the module";
     private static final String ADD_TOOLTIP = "Add a new file";
     private static final String REMOVE_TOOLTIP = "Remove the selected file";
+    private static final String DOCUMENT_PROP_NAME = "DocumentPropName";
 
     private JPanel panel;
 
@@ -69,12 +74,16 @@ public class CustomUI extends ModuleUI<JPanel> implements ActionListener, TableM
 
         titleField = new JTextField();
         titleField.setToolTipText(TITLE_TOOLTIP);
+        titleField.getDocument().putProperty(DOCUMENT_PROP_NAME, JAR_TITLE_PROP);
+        titleField.getDocument().addDocumentListener(this);
 
         versionLabel = new JLabel("Version: ");
         versionLabel.setToolTipText(VERSION_TOOLTIP);
 
         versionField = new JTextField();
         versionField.setToolTipText(VERSION_TOOLTIP);
+        versionField.getDocument().putProperty(DOCUMENT_PROP_NAME, JAR_VERSION_PROP);
+        versionField.getDocument().addDocumentListener(this);
 
         srcFileTableModel = new FileTableModel();
         srcFileTableModel.addTableModelListener(this);
@@ -101,7 +110,21 @@ public class CustomUI extends ModuleUI<JPanel> implements ActionListener, TableM
 
     @Override
     protected void handlePropertyChange(PropertyChangeEvent event) {
-
+        if(event.getPropertyName().equals(SRC_FILES_PROP)){
+            //TODO update the table model
+        }
+        else if(event.getPropertyName().equals(JAR_TITLE_PROP)){
+            String value = (String) event.getNewValue();
+            if(!titleField.getText().equals(value)){
+                titleField.setText(value);
+            }
+        }
+        else if(event.getPropertyName().equals(JAR_VERSION_PROP)){
+            String value = (String) event.getNewValue();
+            if(!versionField.getText().equals(value)){
+                versionField.setText(value);
+            }
+        }
     }
 
     @Override
@@ -124,4 +147,32 @@ public class CustomUI extends ModuleUI<JPanel> implements ActionListener, TableM
         List<SrcFile> srcFiles = srcFileTableModel.getSrcFiles();
         fireViewValueChangeEvent(this, SRC_FILES_PROP, srcFiles);
     }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        updateValue(e);
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        updateValue(e);
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        updateValue(e);
+    }
+
+    private void updateValue(DocumentEvent e){
+        Document doc = e.getDocument();
+        String propName = (String) doc.getProperty(DOCUMENT_PROP_NAME);
+        if(JAR_TITLE_PROP.equals(propName)){
+            fireViewValueChangeEvent(this, JAR_TITLE_PROP, titleField.getText());
+        }
+        else if(JAR_VERSION_PROP.equals(propName)){
+            fireViewValueChangeEvent(this, JAR_VERSION_PROP, versionField.getText());
+        }
+    }
+
+
 }
