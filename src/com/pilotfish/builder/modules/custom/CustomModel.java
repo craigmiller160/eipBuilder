@@ -16,15 +16,18 @@
 
 package com.pilotfish.builder.modules.custom;
 
+import com.pilotfish.builder.ModuleCompletionModel;
 import com.pilotfish.builder.ModuleModel;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
 
 /**
  * Created by craigmiller on 7/6/16.
  */
-public class CustomModel extends ModuleModel {
+public class CustomModel extends ModuleCompletionModel {
 
+    public static final String CUSTOM_MODEL_NAME = "CustomModel";
     public static final String JAR_TITLE_PROP = "JarTitle";
     public static final String JAR_VERSION_PROP = "JarVersion";
     public static final String SRC_FILES_PROP = "SrcFiles";
@@ -59,5 +62,17 @@ public class CustomModel extends ModuleModel {
 
     public void setSrcFiles(List<SrcFile> srcFiles) {
         this.srcFiles = srcFiles;
+    }
+
+
+    @Override
+    public String getModelName() {
+        return CUSTOM_MODEL_NAME;
+    }
+
+    @Override
+    public boolean isConfigComplete() {
+        return !StringUtils.isEmpty(jarTitle) && !StringUtils.isEmpty(jarVersion) &&
+                (srcFiles != null && srcFiles.size() > 0);
     }
 }

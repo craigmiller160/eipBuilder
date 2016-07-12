@@ -17,13 +17,15 @@
 package com.pilotfish.builder.modules.main;
 
 import com.pilotfish.builder.BuildConfigType;
+import com.pilotfish.builder.ModuleCompletionModel;
 import com.pilotfish.builder.ModuleModel;
 
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class MainModel extends ModuleModel {
+public class MainModel extends ModuleCompletionModel {
 
+    public static final String MAIN_MODEL_NAME = "MainModel";
     public static final String RUN_CONFIG_TYPE_PROP = "BuildConfigType";
 
     private BuildConfigType buildConfigType;
@@ -38,4 +40,13 @@ public class MainModel extends ModuleModel {
         return buildConfigType;
     }
 
+    @Override
+    public String getModelName() {
+        return MAIN_MODEL_NAME;
+    }
+
+    @Override
+    public boolean isConfigComplete() {
+        return buildConfigType != null && buildConfigType != BuildConfigType.NONE;
+    }
 }

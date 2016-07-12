@@ -16,15 +16,52 @@
 
 package com.pilotfish.builder.modules.full;
 
+import com.pilotfish.builder.ModuleCompletionModel;
 import com.pilotfish.builder.ModuleModel;
 
 /**
  * Created by craigmiller on 7/5/16.
  */
-public class FullBuildModel extends ModuleModel {
+public class FullBuildModel extends ModuleCompletionModel {
+
+    public static final String FULL_BUILD_MODEL_NAME = "FullBuildModel";
+    public static final String FULL_BUILD_TYPE_PROP = "FullBuildType";
+    public static final String BUILD_NAME_PROP = "BuildName";
+
+    private FullBuildType fullBuildType;
+    private String buildName;
 
     public FullBuildModel(){
 
     }
 
+    public FullBuildType getFullBuildType() {
+        return fullBuildType;
+    }
+
+    public void setFullBuildType(FullBuildType fullBuildType) {
+        FullBuildType oldValue = this.fullBuildType;
+        this.fullBuildType = fullBuildType;
+        firePropertyChangeEvent(FULL_BUILD_TYPE_PROP, oldValue, fullBuildType);
+    }
+
+    public String getBuildName() {
+        return buildName;
+    }
+
+    public void setBuildName(String buildName) {
+        String oldValue = this.buildName;
+        this.buildName = buildName;
+        firePropertyChangeEvent(BUILD_NAME_PROP, oldValue, buildName);
+    }
+
+    @Override
+    public String getModelName() {
+        return FULL_BUILD_MODEL_NAME;
+    }
+
+    @Override
+    public boolean isConfigComplete() {
+        return fullBuildType != null && fullBuildType != FullBuildType.NONE;
+    }
 }
