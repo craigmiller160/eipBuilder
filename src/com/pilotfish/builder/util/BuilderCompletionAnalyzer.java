@@ -16,9 +16,13 @@
 
 package com.pilotfish.builder.util;
 
+import com.pilotfish.builder.BuildConfigType;
 import com.pilotfish.builder.ModuleCompletionModel;
+import com.pilotfish.builder.modules.main.MainModel;
 
-import java.util.Map;
+import static com.pilotfish.builder.modules.main.MainModel.*;
+import static com.pilotfish.builder.modules.custom.CustomModel.*;
+import static com.pilotfish.builder.modules.full.FullBuildModel.*;
 
 /**
  * Created by craigmiller on 7/15/16.
@@ -28,15 +32,22 @@ public class BuilderCompletionAnalyzer extends CompletionAnalyzer{
     protected BuilderCompletionAnalyzer(){}
 
     @Override
-    protected synchronized void checkCompletionStatus(){
-        for(Map.Entry<String,ModuleCompletionModel> entry : getModels().entrySet()){
-            ModuleCompletionModel model = entry.getValue();
-            if(!model.isConfigComplete()){
-                setCompletionStatus(false);
+    public synchronized void checkCompletionStatus(){
+        MainModel mainModel = (MainModel) getModels().get(MAIN_MODEL_NAME);
+        if(mainModel.isConfigComplete()){
+            BuildConfigType buildConfigType = mainModel.getBuildConfigType();
+            if(BuildConfigType.FULL_APP.equals(buildConfigType)){
+                ModuleCompletionModel fullModel = getModels().get(FULL_BUILD_MODEL_NAME);
+                setCompletionStatus(fullModel.isConfigComplete());
+                return;
+            }
+            else if(BuildConfigType.CUSTOM_MODULE.equals(buildConfigType)){
+                ModuleCompletionModel customModel = getModels().get(CUSTOM_MODEL_NAME);
+                setCompletionStatus(customModel.isConfigComplete());
                 return;
             }
         }
-        setCompletionStatus(true);
+        setCompletionStatus(false);
     }
 
 }

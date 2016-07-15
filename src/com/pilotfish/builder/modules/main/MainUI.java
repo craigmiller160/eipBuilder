@@ -157,6 +157,9 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener, DocumentLi
         return buildPanel;
     }
 
+    public void setExecuteEnabled(boolean enabled){
+        executeButton.setEnabled(enabled);
+    }
 
     @Override
     public void itemStateChanged(ItemEvent e) {

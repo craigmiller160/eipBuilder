@@ -58,7 +58,7 @@ public class FullBuildUI extends ModuleUI<JPanel> implements DocumentListener, I
         typeLabel = new JLabel("Application Type: ");
         typeLabel.setToolTipText(TYPE_TOOLTIP);
 
-        nameLabel = new JLabel("Build Name: ");
+        nameLabel = new JLabel("Build Name (optional): ");
         nameLabel.setToolTipText(NAME_TOOLTIP);
 
         typeComboBox = new JComboBox<>(FullBuildType.values());

@@ -3,6 +3,8 @@ package com.pilotfish.builder.modules.main;
 import com.pilotfish.builder.*;
 import com.pilotfish.builder.listener.ViewEvent;
 import com.pilotfish.builder.listener.ViewValueChangeEvent;
+import com.pilotfish.builder.util.CompletionAnalyzerFactory;
+import com.pilotfish.builder.util.CompletionCallback;
 
 import javax.swing.*;
 
@@ -11,7 +13,7 @@ import static com.pilotfish.builder.modules.main.MainModel.*;
 /**
  * Created by craig on 7/5/16.
  */
-public class MainModule implements Module<JFrame>{
+public class MainModule implements Module<JFrame>, CompletionCallback{
 
     private MainModel mainModel;
     private MainUI mainUI;
@@ -19,6 +21,7 @@ public class MainModule implements Module<JFrame>{
     public MainModule(){
         init();
         initUI();
+        initAnalyzer();
     }
 
     private void init(){
@@ -41,6 +44,11 @@ public class MainModule implements Module<JFrame>{
                 }
             });
         }
+    }
+
+    private void initAnalyzer(){
+        CompletionAnalyzerFactory.getInstance().getAnalyzer().addCallback(this);
+//        CompletionAnalyzerFactory.getInstance().getAnalyzer().checkCompletionStatus();
     }
 
     @Override
@@ -71,5 +79,10 @@ public class MainModule implements Module<JFrame>{
                     break;
             }
         }
+    }
+
+    @Override
+    public void completionStatus(boolean complete) {
+        mainUI.setExecuteEnabled(complete);
     }
 }

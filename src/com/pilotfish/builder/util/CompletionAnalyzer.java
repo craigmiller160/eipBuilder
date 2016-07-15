@@ -55,7 +55,7 @@ public abstract class CompletionAnalyzer implements PropertyChangeListener{
         return models;
     }
 
-    protected abstract void checkCompletionStatus();
+    public abstract void checkCompletionStatus();
 
     protected synchronized void setCompletionStatus(boolean complete){
         for(CompletionCallback callback : callbacks){

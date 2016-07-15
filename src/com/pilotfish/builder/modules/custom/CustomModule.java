@@ -69,7 +69,7 @@ public class CustomModule implements Module<JPanel> {
             customModel.setJarTitle((String) event.getValue());
         }
         else if(JAR_VERSION_PROP.equals(event.getKey())){
-            customModel.setJarTitle((String) event.getValue());
+            customModel.setJarVersion((String) event.getValue());
         }
         else if(SRC_FILES_PROP.equals(event.getKey())){
             customModel.setSrcFiles((List<SrcFile>) event.getValue());
