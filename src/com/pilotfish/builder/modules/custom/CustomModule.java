@@ -4,8 +4,13 @@ import com.pilotfish.builder.Module;
 import com.pilotfish.builder.ModuleModel;
 import com.pilotfish.builder.ModuleUI;
 import com.pilotfish.builder.listener.ViewEvent;
+import com.pilotfish.builder.listener.ViewValueChangeEvent;
 
 import javax.swing.*;
+
+import java.util.List;
+
+import static com.pilotfish.builder.modules.custom.CustomModel.*;
 
 /**
  * Created by craig on 7/5/16.
@@ -54,6 +59,20 @@ public class CustomModule implements Module<JPanel> {
 
     @Override
     public void viewEvent(ViewEvent viewEvent) {
+        if(viewEvent instanceof ViewValueChangeEvent){
+            handleValueChangeEvent((ViewValueChangeEvent) viewEvent);
+        }
+    }
 
+    private void handleValueChangeEvent(ViewValueChangeEvent event){
+        if(JAR_TITLE_PROP.equals(event.getKey())){
+            customModel.setJarTitle((String) event.getValue());
+        }
+        else if(JAR_VERSION_PROP.equals(event.getKey())){
+            customModel.setJarTitle((String) event.getValue());
+        }
+        else if(SRC_FILES_PROP.equals(event.getKey())){
+            customModel.setSrcFiles((List<SrcFile>) event.getValue());
+        }
     }
 }

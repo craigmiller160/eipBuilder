@@ -25,6 +25,7 @@ import java.util.List;
 public class ViewEventSupport {
 
     private final List<ViewListener> listeners = new ArrayList<>();
+    private boolean isEventFiring = false;
 
     public ViewEventSupport(){
 
@@ -53,10 +54,16 @@ public class ViewEventSupport {
         callListeners(event);
     }
 
+    public boolean isEventFiring(){
+        return isEventFiring;
+    }
+
     private void callListeners(ViewEvent event){
+        isEventFiring = true;
         for(ViewListener listener : listeners){
             listener.viewEvent(event);
         }
+        isEventFiring = false;
     }
 
 }

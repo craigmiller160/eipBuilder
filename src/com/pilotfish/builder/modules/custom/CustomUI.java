@@ -111,19 +111,13 @@ public class CustomUI extends ModuleUI<JPanel> implements ActionListener, TableM
     @Override
     protected void handlePropertyChange(PropertyChangeEvent event) {
         if(event.getPropertyName().equals(SRC_FILES_PROP)){
-            //TODO update the table model
+            srcFileTableModel.setSrcFiles((List<SrcFile>) event.getNewValue());
         }
         else if(event.getPropertyName().equals(JAR_TITLE_PROP)){
-            String value = (String) event.getNewValue();
-            if(!titleField.getText().equals(value)){
-                titleField.setText(value);
-            }
+            titleField.setText((String) event.getNewValue());
         }
         else if(event.getPropertyName().equals(JAR_VERSION_PROP)){
-            String value = (String) event.getNewValue();
-            if(!versionField.getText().equals(value)){
-                versionField.setText(value);
-            }
+            versionField.setText((String) event.getNewValue());
         }
     }
 

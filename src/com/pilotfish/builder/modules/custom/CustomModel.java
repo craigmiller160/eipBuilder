@@ -61,7 +61,9 @@ public class CustomModel extends ModuleCompletionModel {
     }
 
     public void setSrcFiles(List<SrcFile> srcFiles) {
+        List<SrcFile> oldValue = this.srcFiles;
         this.srcFiles = srcFiles;
+        firePropertyChangeEvent(SRC_FILES_PROP, oldValue, srcFiles);
     }
 
 

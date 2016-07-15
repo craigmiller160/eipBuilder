@@ -17,16 +17,18 @@ public abstract class ModuleUI<T extends Component> implements PropertyChangeLis
 
     @Override
     public final void propertyChange(final PropertyChangeEvent evt) {
-        if(SwingUtilities.isEventDispatchThread()){
-            handlePropertyChange(evt);
-        }
-        else{
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    handlePropertyChange(evt);
-                }
-            });
+        if(!support.isEventFiring()){
+            if(SwingUtilities.isEventDispatchThread()){
+                handlePropertyChange(evt);
+            }
+            else{
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        handlePropertyChange(evt);
+                    }
+                });
+            }
         }
     }
 

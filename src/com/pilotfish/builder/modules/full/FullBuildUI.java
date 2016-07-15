@@ -80,16 +80,10 @@ public class FullBuildUI extends ModuleUI<JPanel> implements DocumentListener, I
     @Override
     protected void handlePropertyChange(PropertyChangeEvent event) {
         if(event.getPropertyName().equals(BUILD_NAME_PROP)){
-            String value = (String) event.getNewValue();
-            if(!nameField.getText().equals(value)){
-                nameField.setText(value);
-            }
+            nameField.setText((String) event.getNewValue());
         }
         else if(event.getPropertyName().equals(FULL_BUILD_TYPE_PROP)){
-            FullBuildType value = (FullBuildType) event.getNewValue();
-            if(!typeComboBox.getSelectedItem().equals(value)){
-                typeComboBox.setSelectedItem(value);
-            }
+            typeComboBox.setSelectedItem((FullBuildType) event.getNewValue());
         }
     }
 
