@@ -20,37 +20,46 @@ import com.pilotfish.builder.ModuleCompletionModel;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by craigmiller on 7/12/16.
  */
-public class CompletionAnalyzer implements PropertyChangeListener{
-
-    private static final Object instanceLock = new Object();
-    private static CompletionAnalyzer instance;
+public abstract class CompletionAnalyzer implements PropertyChangeListener{
 
     private final Map<String,ModuleCompletionModel> models = new HashMap<>();
+    private final List<CompletionCallback> callbacks = new ArrayList<>();
 
-    public static CompletionAnalyzer getInstance(){
-        if(instance == null){
-            synchronized (instanceLock){
-                if(instance == null){
-                    instance = new CompletionAnalyzer();
-                }
-            }
-        }
-        return instance;
-    }
-
-    public void addModel(ModuleCompletionModel model){
+    public synchronized void addModel(ModuleCompletionModel model){
         models.put(model.getModelName(), model);
         model.addPropertyChangeListener(this);
     }
 
+    public synchronized void addCallback(CompletionCallback callback){
+        this.callbacks.add(callback);
+    }
+
+    public synchronized void removeCallback(CompletionCallback callback){
+        this.callbacks.remove(callback);
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        checkCompletionStatus();
+    }
 
+    protected synchronized Map<String,ModuleCompletionModel> getModels(){
+        return models;
+    }
+
+    protected abstract void checkCompletionStatus();
+
+    protected synchronized void setCompletionStatus(boolean complete){
+        for(CompletionCallback callback : callbacks){
+            callback.completionStatus(complete);
+        }
     }
 }

@@ -14,21 +14,13 @@
  * limitations under the License.
  */
 
-package com.pilotfish.builder;
-
-import com.pilotfish.builder.util.CompletionAnalyzerFactory;
+package com.pilotfish.builder.util;
 
 /**
- * Created by craigmiller on 7/12/16.
+ * Created by craigmiller on 7/15/16.
  */
-public abstract class ModuleCompletionModel extends ModuleModel {
+public interface CompletionCallback {
 
-    protected ModuleCompletionModel(){
-        CompletionAnalyzerFactory.getInstance().getAnalyzer().addModel(this);
-    }
-
-    public abstract boolean isConfigComplete();
-
-    public abstract String getModelName();
+    void completionStatus(boolean complete);
 
 }
