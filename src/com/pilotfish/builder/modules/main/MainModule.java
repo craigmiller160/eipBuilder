@@ -66,6 +66,9 @@ public class MainModule implements Module<JFrame>{
                 case RUN_CONFIG_TYPE_PROP:
                     mainModel.setBuildConfigType((BuildConfigType) vvce.getValue());
                     break;
+                case DEV_DIRECTORY_PROP:
+                    mainModel.setDevDirectory((String) vvce.getValue());
+                    break;
             }
         }
     }

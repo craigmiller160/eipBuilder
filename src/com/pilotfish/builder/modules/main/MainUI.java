@@ -30,6 +30,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 
+import static com.pilotfish.builder.modules.main.MainModel.*;
+
 /**
  * Created by craigmiller on 7/5/16.
  */
@@ -161,25 +163,27 @@ public class MainUI extends ModuleUI<JFrame> implements ItemListener, DocumentLi
         if(e.getSource() == buildTypeComboBox && e.getStateChange() == ItemEvent.SELECTED){
             BuildConfigType buildConfigType = (BuildConfigType) e.getItem();
             cardLayout.show(cardPanel, buildConfigType.toString());
+            fireViewValueChangeEvent(this, RUN_CONFIG_TYPE_PROP, buildConfigType);
         }
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        updateTooltip();
+        updateValue();
     }
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        updateTooltip();
+        updateValue();
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        updateTooltip();
+        updateValue();
     }
 
-    private void updateTooltip(){
+    private void updateValue(){
         devDirField.setToolTipText(devDirField.getText());
+        fireViewValueChangeEvent(this, DEV_DIRECTORY_PROP, devDirField.getText());
     }
 }

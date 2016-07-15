@@ -27,8 +27,10 @@ public class MainModel extends ModuleCompletionModel {
 
     public static final String MAIN_MODEL_NAME = "MainModel";
     public static final String RUN_CONFIG_TYPE_PROP = "BuildConfigType";
+    public static final String DEV_DIRECTORY_PROP = "DevDirectory";
 
     private BuildConfigType buildConfigType;
+    private String devDirectory;
 
     public void setBuildConfigType(BuildConfigType buildConfigType){
         BuildConfigType oldValue = this.buildConfigType;
@@ -38,6 +40,16 @@ public class MainModel extends ModuleCompletionModel {
 
     public BuildConfigType getBuildConfigType(){
         return buildConfigType;
+    }
+
+    public String getDevDirectory() {
+        return devDirectory;
+    }
+
+    public void setDevDirectory(String devDirectory) {
+        String oldValue = this.devDirectory;
+        this.devDirectory = devDirectory;
+        firePropertyChangeEvent(DEV_DIRECTORY_PROP, oldValue, devDirectory);
     }
 
     @Override
