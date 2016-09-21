@@ -19,6 +19,7 @@ package com.pilotfish.builder.modules.main;
 import com.pilotfish.builder.BuildConfigType;
 import com.pilotfish.builder.ModuleCompletionModel;
 import com.pilotfish.builder.ModuleModel;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Created by craigmiller on 7/5/16.
@@ -59,6 +60,7 @@ public class MainModel extends ModuleCompletionModel {
 
     @Override
     public boolean isConfigComplete() {
-        return buildConfigType != null && buildConfigType != BuildConfigType.NONE;
+        return !StringUtils.isEmpty(devDirectory) &&
+                (buildConfigType != null && buildConfigType != BuildConfigType.NONE);
     }
 }

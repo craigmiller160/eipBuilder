@@ -36,18 +36,32 @@ public class EipBuilder{
     private static final String NIMBUS_LF = "Nimbus";
 
     private static EipBuilder instance;
+    private static final Object instanceLock = new Object();
 
     private final Map<BuildConfigType,Module> modules = new HashMap<>();
 
     public static void main(String[] args){
-        instance = new EipBuilder();
+        EipBuilder builder = EipBuilder.getInstance();
+        builder.start();
     }
 
     public static EipBuilder getInstance(){
+        if(instance == null){
+            synchronized (instanceLock){
+                if(instance == null){
+                    instance = new EipBuilder();
+                }
+            }
+        }
+
         return instance;
     }
 
-    public EipBuilder(){
+    private EipBuilder(){
+
+    }
+
+    public void start(){
         initLookAndFeel();
         initModules();
         showFrame();

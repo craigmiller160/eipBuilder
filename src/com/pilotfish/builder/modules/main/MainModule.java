@@ -48,7 +48,7 @@ public class MainModule implements Module<JFrame>, CompletionCallback{
 
     private void initAnalyzer(){
         CompletionAnalyzerFactory.getInstance().getAnalyzer().addCallback(this);
-//        CompletionAnalyzerFactory.getInstance().getAnalyzer().checkCompletionStatus();
+        CompletionAnalyzerFactory.getInstance().getAnalyzer().checkCompletionStatus();
     }
 
     @Override
@@ -83,6 +83,8 @@ public class MainModule implements Module<JFrame>, CompletionCallback{
 
     @Override
     public void completionStatus(boolean complete) {
-        mainUI.setExecuteEnabled(complete);
+        if(mainUI != null){
+            mainUI.setExecuteEnabled(complete);
+        }
     }
 }
